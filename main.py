@@ -4,6 +4,26 @@
 # LF lift, LF forward, LF drop, RF backward/LR backward, RR lift, RR forward, RR drop, RF lift, RF drop etc
 # Return to zero  ... 'Rest' position
 
+# SPDX-FileCopyrightText: 2021 ladyada for Adafruit Industries
+# SPDX-License-Identifier: MIT
+
+# import time
+# from adafruit_servokit import ServoKit
+
+
+# kit = ServoKit(channels=16)
+
+
+# kit.servo[0].angle = 180
+# kit.continuous_servo[0].throttle = 1
+# time.sleep(1)
+# kit.continuous_servo[0].throttle = 1
+# time.sleep(1)
+# kit.servo[0].angle = 0
+# kit.continuous_servo[0].throttle = 0
+# time.sleep(1)
+
+
 def push(leg):
     var = leg == str(leg)
     if leg == 'LF':
