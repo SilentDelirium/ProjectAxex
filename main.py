@@ -1,17 +1,29 @@
-# Quadruped robot v1
+# Quadruped robot v1 Codename: Tektite
 #
 # Leg order LF, RR, RF, LR     forward motion works diagonally ie LF and RR, and RF and LR
 # LF lift, LF forward, LF drop, RF backward/LR backward, RR lift, RR forward, RR drop, RF lift, RF drop etc
 # Return to zero  ... 'Rest' position
+#
+# IDs:
+L = 0
+LR = 1
+LF = 2
+R = 3
+RR = 5
+RF = 6
 
-# SPDX-FileCopyrightText: 2021 ladyada for Adafruit Industries
-# SPDX-License-Identifier: MIT
+import time
+from adafruit_servokit import ServoKit
 
-# import time
-# from adafruit_servokit import ServoKit
+kit = ServoKit(channels=16)
 
-
-# kit = ServoKit(channels=16)
+# Rest Variables
+L_rest = 90
+LR_rest = 140
+LF_rest = 50
+R_rest = 70
+RR_rest = 70
+RF_rest = 130
 
 
 # kit.servo[0].angle = 180
@@ -24,71 +36,80 @@
 # time.sleep(1)
 
 
-def push(leg):
-    var = leg == str(leg)
-    if leg == 'LF':
-        print('pushing Left Front leg')
-    if str(leg) == 'RF':
-        print('pushing Right Front leg')
-    if str(leg) == 'LR':
-        print('pushing Left Rear leg')
-    if str(leg) == 'RR':
-        print('pushing Right Rear leg')
+def wait(x):
+    for i in range(x):
+        time.sleep(0.1)
 
 
-def pull(leg):
-    var = leg == str(leg)
-    if str(leg) == "LF":
-        print('pulling Left Front leg')
-    if str(leg) == 'RF':
-        print('pulling Right Front leg')
-    if str(leg) == 'LR':
-        print('pulling Left Rear leg')
-    if str(leg) == 'RR':
-        print('pulling Right Rear leg')
+def push(shoulder):
+    var = shoulder == str(shoulder)
+    if str(shoulder) == 'L':
+        kit.servo[L].angle = 40
+    if str(shoulder) == 'R':
+        kit.servo[R].angle = 120
+
+
+def pull(shoulder):
+    var = shoulder == str(shoulder)
+    if str(shoulder) == "L":
+        kit.servo[L].angle = 120
+    if str(shoulder) == 'R':
+        kit.servo[R].angle = 40
 
 
 def lift(leg):
-    var = leg == str(leg)
     if str(leg) == "LF":
-        print('lifting Left Front leg')
+        kit.servo[LF].angle = 90
     if str(leg) == 'RF':
-        print('lifting Right Front leg')
+        kit.servo[RF].angle = 90
     if str(leg) == 'LR':
-        print('lifting Left Rear leg')
+        kit.servo[LR].angle = 90
     if str(leg) == 'RR':
-        print('lifting Right Rear leg')
+        kit.servo[RR].angle = 90
 
 
 def drop(leg):
-    var = leg == str(leg)
-    if str(leg) == "LF":
-        print('dropping Left Front leg')
-    if str(leg) == 'RF':
-        print('dropping Right Front leg')
-    if str(leg) == 'LR':
-        print('dropping Left Rear leg')
-    if str(leg) == 'RR':
-        print('dropping Right Rear leg')
+    if str(leg) == "LF":  # down
+        kit.servo[LF].angle = 30
+    if str(leg) == 'RF':  # up
+        kit.servo[RF].angle = 170
+    if str(leg) == 'LR':  # up
+        kit.servo[LR].angle = 170
+    if str(leg) == 'RR':  # down
+        kit.servo[RR].angle = 30
 
 
-def rest(leg):
-    var = leg == str(leg)
-    if str(leg) == "LF":
-        print('resting Left Front leg')
-    if str(leg) == 'RF':
-        print('resting Right Front leg')
-    if str(leg) == 'LR':
-        print('resting Left Rear leg')
-    if str(leg) == 'RR':
-        print('resting Right Rear leg')
+def rest(limb):
+    limb == str(limb)
+    if str(limb) == "LF":
+        kit.servo[LF].angle = LF_rest
+    if str(limb) == 'RF':
+        kit.servo[RF].angle = RF_rest
+    if str(limb) == 'LR':
+        kit.servo[LR].angle = LR_rest
+    if str(limb) == 'RR':
+        kit.servo[RR].angle = RR_rest
+    if str(limb) == 'L':
+        kit.servo[L].angle = L_rest
+    if str(limb) == 'R':
+        kit.servo[R].angle = R_rest
 
 
 def full_rest():
     rest('LF')
     rest('RR')
+    rest('L')
     rest('LR')
     rest('RF')
+    rest('R')
+
+
+# Alert
+def alert():
+    drop('LF')
+    drop('RR')
+    drop('RF')
+    drop('LR')
 
 
 # Move
@@ -96,7 +117,6 @@ def move(steps):
     if steps == 0:
         print('Moved zero steps.')
     if steps <= 0:
-        var = steps == int(steps)
         steps = abs(steps)
         for i in range(steps):
             push('RR')
@@ -110,7 +130,6 @@ def move(steps):
             pull('LF')
             drop('LF')
     else:
-        var = steps == int(steps)
         steps = abs(steps)
         for i in range(steps):
             push('LF')
@@ -126,28 +145,45 @@ def move(steps):
 
 def self_test():
     full_rest()
+    wait(1)
+    push('L')
+    wait(1)
+    full_rest()
+    wait(1)
+    push('R')
+    wait(1)
+    full_rest()
+    wait(1)
+    pull('L')
+    wait(1)
+    full_rest()
+    wait(1)
+    pull('R')
+    wait(1)
+    full_rest()
+    wait(1)
     lift('LF')
-    push('LF')
-    pull('LF')
-    rest('LF')
+    wait(1)
     drop('LF')
+    wait(1)
+    full_rest()
+    wait(1)
     lift('RR')
-    push('RR')
-    pull('RR')
-    rest('RR')
+    wait(1)
     drop('RR')
-    lift('LR')
-    push('LR')
-    pull('LR')
-    rest('LR')
-    drop('LR')
+    wait(1)
+    full_rest()
+    wait(1)
     lift('RF')
-    push('RF')
-    pull('RF')
-    rest('RF')
+    wait(1)
     drop('RF')
+    wait(1)
+    full_rest()
+    wait(1)
+    lift('LR')
+    wait(1)
+    drop('LR')
+    wait(1)
+    full_rest()
 
-
-# add in self check for all correctly zeroed (rested)
-
-self_test()
+# end
