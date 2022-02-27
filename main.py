@@ -4,13 +4,24 @@
 # LF lift, LF forward, LF drop, RF backward/LR backward, RR lift, RR forward, RR drop, RF lift, RF drop etc
 # Return to zero  ... 'Rest' position
 #
+# (S)houlder, (E)lbow, (W)rist
+# 012 LF
+# 456 LR
+# 89 10 RF
+# 12 13 14 RR
 # IDs:
-L = 0
-LR = 1
-LF = 2
-R = 3
-RR = 5
-RF = 6
+s_LF = 0
+w_LF = 2
+e_LF = 1
+s_LR = 4
+w_LR = 6
+e_LR = 5
+s_RF = 8
+w_RF = 10
+e_RF = 9
+s_RR = 12
+w_RR = 14
+e_RR = 13
 
 import time
 from adafruit_servokit import ServoKit
@@ -18,12 +29,24 @@ from adafruit_servokit import ServoKit
 kit = ServoKit(channels=16)
 
 # Rest Variables
-L_rest = 90
-LR_rest = 140
-LF_rest = 50
-R_rest = 70
-RR_rest = 70
-RF_rest = 130
+#L_rest = 90
+#LR_rest = 140
+#LF_rest = 50
+#R_rest = 70
+#RR_rest = 70
+#RF_rest = 130
+s_LF_rest = 130
+w_LF_rest = 90
+e_LF_rest = 110
+s_LR_rest = 150
+w_LR_rest = 50
+e_LR_rest = 90
+s_RF_rest = 90
+w_RF_rest = 90
+e_RF_rest = 90
+s_RR_rest = 90
+w_RR_rest = 90
+e_RR_rest = 90
 
 
 # kit.servo[0].angle = 180
@@ -43,20 +66,61 @@ def wait(x):
 
 def push(shoulder):
     var = shoulder == str(shoulder)
-    if str(shoulder) == 'L':
-        kit.servo[L].angle = 40
-    if str(shoulder) == 'R':
-        kit.servo[R].angle = 120
+    if str(shoulder) == 's_LF':
+        kit.servo[s_LF].angle = 40
+    if str(shoulder) == 'e_LF':
+        kit.servo[e_LF].angle = 40
+    if str(shoulder) == 'w_LF':
+        kit.servo[w_LF].angle = 40
+    if str(shoulder) == 's_LR':
+        kit.servo[s_LR].angle = 40
+    if str(shoulder) == 'e_LR':
+        kit.servo[e_LR].angle = 40
+    if str(shoulder) == 'w_LR':
+        kit.servo[w_LR].angle = 40
+    if str(shoulder) == 's_RF':
+        kit.servo[s_RF].angle = 120
+    if str(shoulder) == 'e_RF':
+        kit.servo[e_RF].angle = 120
+    if str(shoulder) == 'w_RF':
+        kit.servo[w_RF].angle = 120
+    if str(shoulder) == 's_RR':
+        kit.servo[s_RR].angle = 120
+    if str(shoulder) == 'e_RR':
+        kit.servo[e_RR].angle = 120
+    if str(shoulder) == 'w_RR':
+        kit.servo[w_RR].angle = 120
 
 
 def pull(shoulder):
     var = shoulder == str(shoulder)
-    if str(shoulder) == "L":
-        kit.servo[L].angle = 120
-    if str(shoulder) == 'R':
-        kit.servo[R].angle = 40
+    if str(shoulder) == 's_LF':
+        kit.servo[s_LF].angle = 40
+    if str(shoulder) == 'e_LF':
+        kit.servo[e_LF].angle = 40
+    if str(shoulder) == 'w_LF':
+        kit.servo[w_LF].angle = 40
+    if str(shoulder) == 's_LR':
+        kit.servo[s_LR].angle = 40
+    if str(shoulder) == 'e_LR':
+        kit.servo[e_LR].angle = 40
+    if str(shoulder) == 'w_LR':
+        kit.servo[w_LR].angle = 40
+    if str(shoulder) == 's_RF':
+        kit.servo[s_RF].angle = 120
+    if str(shoulder) == 'e_RF':
+        kit.servo[e_RF].angle = 120
+    if str(shoulder) == 'w_RF':
+        kit.servo[w_RF].angle = 120
+    if str(shoulder) == 's_RR':
+        kit.servo[s_RR].angle = 120
+    if str(shoulder) == 'e_RR':
+        kit.servo[e_RR].angle = 120
+    if str(shoulder) == 'w_RR':
+        kit.servo[w_RR].angle = 120
 
 
+"""
 def lift(leg):
     if str(leg) == "LF":
         kit.servo[LF].angle = 90
@@ -66,8 +130,8 @@ def lift(leg):
         kit.servo[LR].angle = 90
     if str(leg) == 'RR':
         kit.servo[RR].angle = 90
-
-
+"""
+"""
 def drop(leg):
     if str(leg) == "LF":  # down
         kit.servo[LF].angle = 30
@@ -77,42 +141,63 @@ def drop(leg):
         kit.servo[LR].angle = 170
     if str(leg) == 'RR':  # down
         kit.servo[RR].angle = 30
-
+"""
 
 def rest(limb):
     limb == str(limb)
-    if str(limb) == "LF":
-        kit.servo[LF].angle = LF_rest
-    if str(limb) == 'RF':
-        kit.servo[RF].angle = RF_rest
-    if str(limb) == 'LR':
-        kit.servo[LR].angle = LR_rest
-    if str(limb) == 'RR':
-        kit.servo[RR].angle = RR_rest
-    if str(limb) == 'L':
-        kit.servo[L].angle = L_rest
-    if str(limb) == 'R':
-        kit.servo[R].angle = R_rest
+    if str(limb) == "s_LF":
+        kit.servo[s_LF].angle = s_LF_rest
+    if str(limb) == "e_LF":
+        kit.servo[e_LF].angle = e_LF_rest
+    if str(limb) == "w_LF":
+        kit.servo[w_LF].angle = w_LF_rest
+    if str(limb) == 's_RF':
+        kit.servo[s_RF].angle = s_RF_rest
+    if str(limb) == 'e_RF':
+        kit.servo[e_RF].angle = e_RF_rest
+    if str(limb) == 'w_RF':
+        kit.servo[w_RF].angle = w_RF_rest
+    if str(limb) == 's_LR':
+        kit.servo[s_LR].angle = s_LR_rest
+    if str(limb) == 'e_LR':
+        kit.servo[e_LR].angle = e_LR_rest
+    if str(limb) == 'w_LR':
+        kit.servo[w_LR].angle = w_LR_rest
+    if str(limb) == 's_RR':
+        kit.servo[s_RR].angle = s_RR_rest
+    if str(limb) == 'e_RR':
+        kit.servo[e_RR].angle = e_RR_rest
+    if str(limb) == 'w_RR':
+        kit.servo[w_RR].angle = w_RR_rest
 
 
 def full_rest():
-    rest('LF')
-    rest('RR')
-    rest('L')
-    rest('LR')
-    rest('RF')
-    rest('R')
+    rest('s_LF')
+    rest('e_LF')
+    rest('w_LF')
+    rest('s_RR')
+    rest('e_RR')
+    rest('w_RR')
+    rest('s_LR')
+    rest('e_LR')
+    rest('w_LR')
+    rest('s_RF')
+    rest('e_RF')
+    rest('w_RF')
 
 
 # Alert
+'''
 def alert():
-    drop('LF')
-    drop('RR')
-    drop('RF')
-    drop('LR')
-
+    full_rest()
+    pull('w_LF')
+    pull('w_RR')
+    pull('w_RF')
+    pull('w_LR')
+'''
 
 # Move
+'''
 def move(steps):
     if steps == 0:
         print('Moved zero steps.')
@@ -141,49 +226,6 @@ def move(steps):
             drop('RF')
             pull('LF')
             pull('RR')
-
-
-def self_test():
-    full_rest()
-    wait(1)
-    push('L')
-    wait(1)
-    full_rest()
-    wait(1)
-    push('R')
-    wait(1)
-    full_rest()
-    wait(1)
-    pull('L')
-    wait(1)
-    full_rest()
-    wait(1)
-    pull('R')
-    wait(1)
-    full_rest()
-    wait(1)
-    lift('LF')
-    wait(1)
-    drop('LF')
-    wait(1)
-    full_rest()
-    wait(1)
-    lift('RR')
-    wait(1)
-    drop('RR')
-    wait(1)
-    full_rest()
-    wait(1)
-    lift('RF')
-    wait(1)
-    drop('RF')
-    wait(1)
-    full_rest()
-    wait(1)
-    lift('LR')
-    wait(1)
-    drop('LR')
-    wait(1)
-    full_rest()
-
+'''
+w_RF = 90
 # end
